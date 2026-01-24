@@ -1,6 +1,6 @@
 name: DNSHE Domain Auto Renew
 
-于:
+on:
   schedule:
     # 表达式说明：分钟 小时 天 月 星期
     # 0 0 1 * * 表示 UTC 时间每月 1 日 00:00
