@@ -42,7 +42,7 @@ jobs:
           LAST=$(git log -1 --format="%ct")
           NOW=$(date +%s)
           DAYS=$(( (NOW - LAST) / 86400 ))
-          if [ $DAYS -ge 50 ]; then
+          if [ $DAYS -ge 0 ]; then
             date -u > .keepalive
             git add .keepalive
             git commit -m "chore: keepalive $(date -u +%Y-%m-%d)"
