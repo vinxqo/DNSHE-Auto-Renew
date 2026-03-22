@@ -34,5 +34,17 @@ jobs:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_TOPIC: ${{ secrets.PUSHPLUS_TOPIC }}
         run: python renew_domains.py
-      - name: Keepalive        # ← 加在最后一步
-        uses: gautamkrishnar/keepalive-workflow@v2
+        
+      - name: Keepalive
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          LAST=$(git log -1 --format="%ct")
+          NOW=$(date +%s)
+          DAYS=$(( (NOW - LAST) / 86400 ))
+          if [ $DAYS -ge 50 ]; then
+            date -u > .keepalive
+            git add .keepalive
+            git commit -m "chore: keepalive $(date -u +%Y-%m-%d)"
+            git push
+          fi
